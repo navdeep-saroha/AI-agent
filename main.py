@@ -24,8 +24,17 @@ response = client.chat.completions.create(
 )
 
 def main():
+    usage_token = response.usage.prompt_tokens
+    complete_token = response.usage.completion_tokens
+
+    if not usage_token or not complete_token:
+        raise RuntimeError("API Key Failed")
+
+    print(f"Prompt tokens: {usage_token}")
+    print(f"Response tokens: {complete_token}")
+    print("Response:")
     print(response.choices[0].message.content)
-    print("Hello from ai-agent!")
+
 
 
 if __name__ == "__main__":
