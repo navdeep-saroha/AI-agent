@@ -1,5 +1,28 @@
 import os
 import subprocess
+from openai.types.chat import ChatCompletionFunctionToolParam
+schema_run_python_file: ChatCompletionFunctionToolParam = {
+    "type": "function",
+    "function": {
+        "name": "run_python_file",
+        "description": "Runs a Python file located inside the working directory and returns its output.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "Path to the Python file to run, relative to the working directory.",
+                },
+                "args": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Optional list of command-line arguments to pass to the Python file.",
+                },
+            },
+            "required": ["file_path"],
+        },
+    },
+}
 def run_python_file(working_directory: str, file_path: str, args: list[str] | None = None) -> str:
     try:   
         abs_path_wd = os.path.abspath(working_directory)

@@ -1,4 +1,23 @@
 import os
+from openai.types.chat import ChatCompletionFunctionToolParam
+
+schema_get_file_content: ChatCompletionFunctionToolParam = {
+    "type": "function",
+    "function": {
+        "name": "get_file_content",
+        "description": "Get or read content from file",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "speciy the path to the file for which contents are to be fetched"
+                }
+            },
+            "requried": ["file_path"],
+        }
+    }
+}
 def get_file_content(working_directory: str, file_path: str) -> str:
     try:
 
